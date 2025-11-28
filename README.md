@@ -1,73 +1,164 @@
-# React + TypeScript + Vite
+# Торговая Платформа для Криптовалют ₿
+![widget-demo](https://github.com/user-attachments/assets/2d2fd489-5eed-4355-bfd1-b63691bc6945)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Данный репозиторий представляет собой веб-приложение для торговли криптовалютами с интерактивными графиками цен в реальном времени. Приложение поддерживает подключение криптокошельков через WalletConnect, выбор торговых пар, отслеживание изменения цен и выбор типа позиции (Long/Short).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Запуск приложения
 
-## React Compiler
+Для запуска приложения необходимо настроить переменные окружения. Создайте файл `.env` или `.env.local` в корневой директории проекта.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Важно:** Для работы с WalletConnect необходимо указать `VITE_WALLETCONNECT_PROJECT_ID` в файле конфигурации `src/configs/wagmi-config.ts`.
 
-## Expanding the ESLint configuration
+```bash
+# Клонирование репозитория
+git clone <repository-url> .
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Установка зависимостей
+npm install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Запуск приложения в режиме разработки
+npm run dev
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Сборка для продакшена
+npm run build
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Предпросмотр продакшен-сборки
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Функциональные возможности
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Основной функционал
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- [x] Интерактивный график цен криптовалют в реальном времени
+- [x] Выбор торговой пары из доступных рынков (BTCDEGEN/USDC, ETH/USDC и др.)
+- [x] Отображение текущей цены с форматированием
+- [x] Отображение изменения цены в процентах с цветовой индикацией (зеленый/красный)
+- [x] Автоматическое обновление цены каждые 2 секунды
+
+
+### Интеграция с кошельками
+
+- [x] Подключение криптокошельков через RainbowKit
+- [x] Поддержка WalletConnect
+- [x] Отображение адреса подключенного кошелька
+- [x] Кнопка для подключения/отключения кошелька
+
+### График
+
+- [x] График на базе библиотеки Lightweight Charts
+- [x] Область с градиентной заливкой
+- [x] Линия текущей цены
+
+
+
+### Технологический стек
+
+- **React 19** - библиотека для создания пользовательского интерфейса
+- **TypeScript** - типизированный JavaScript
+- **Vite** - инструмент сборки и разработки
+- **Tailwind CSS** - утилитарный CSS-фреймворк
+- **Lightweight Charts** - библиотека для отображения финансовых графиков
+- **Wagmi** - React-хуки для работы с Ethereum
+- **RainbowKit** - компоненты для подключения кошельков
+- **Viem** - TypeScript-библиотека для взаимодействия с Ethereum
+- **React Router** - маршрутизация в приложении
+- **TanStack Query** - управление состоянием серверных данных
+
+### Структура проекта
+
 ```
+src/
+├── components/          # Переиспользуемые компоненты
+│   ├── app-buttons/     # Кнопки (подключение кошелька, иконки)
+│   ├── app-dropdown/    # Выпадающие списки (выбор рынка)
+│   └── app-icons/       # Иконки приложения
+├── configs/             # Конфигурационные файлы
+│   └── wagmi-config.ts  # Настройка Wagmi и RainbowKit
+├── constants/            # Константы приложения
+│   ├── market-data.ts   # Данные о торговых парах
+│   └── router-paths.ts  # Пути маршрутизации
+├── features/            # Функциональные компоненты
+│   ├── TradingChart.tsx      # Компонент графика
+│   └── PositionTypeSelector.tsx # Выбор типа позиции
+├── layout/              # Компоненты макета
+├── pages/               # Страницы приложения
+│   └── trade/           # Страница торговли
+├── providers/           # Провайдеры контекста
+│   └── wagmi-provider.tsx # Провайдер для Wagmi
+├── routes/              # Конфигурация маршрутов
+└── utils/               # Вспомогательные функции
+```
+
+### Настройка WalletConnect
+
+Для работы с кошельками необходимо:
+
+1. Зарегистрироваться на [WalletConnect Cloud](https://cloud.walletconnect.com/)
+2. Создать проект и получить Project ID
+3. Обновить `src/configs/wagmi-config.ts`:
+
+```typescript
+export const config = getDefaultConfig({
+    appName: "Crypto Trading Platform",
+    projectId: "YOUR_WALLETCONNECT_PROJECT_ID", // Замените на ваш Project ID
+    chains: [mainnet],
+    transports: {
+        [mainnet.id]: http(),
+    },
+});
+```
+
+## Особенности реализации
+
+### График цен
+
+- Используется библиотека `lightweight-charts` для отображения финансовых данных
+- Генерация моковых данных с реалистичными колебаниями цен
+- Автоматическое обновление каждые 2 секунды
+- Визуализация текущей цены через ценовую линию на графике
+
+### Управление состоянием
+
+- Локальное состояние компонентов через React hooks
+- Интеграция с Ethereum через Wagmi для работы с кошельками
+- React Query для управления асинхронными данными
+
+### Стилизация
+
+- Tailwind CSS для быстрой разработки UI
+- Темная тема с кастомными цветами
+- Адаптивный дизайн для различных размеров экранов
+
+## Разработка
+
+### Доступные команды
+
+- `npm run dev` - запуск dev-сервера с hot-reload
+- `npm run build` - сборка для продакшена
+- `npm run preview` - предпросмотр продакшен-сборки
+- `npm run lint` - проверка кода линтером
+
+### Добавление новых торговых пар
+
+Для добавления новой торговой пары отредактируйте файл `src/constants/market-data.ts`:
+
+```typescript
+export const marketMockData: MarketOption[] = [
+    // ... существующие пары
+    {
+        icon: "",
+        label: "NEW/USDC",
+        value: "new-usdc",
+        leverage: "50x",
+        initialPrice: 1000.00,
+    },
+];
+```
+
+## Лицензия
+
+<!-- Укажите лицензию проекта -->
+
+<!-- Здесь будут дополнительные скриншоты и демонстрации функциональности -->
